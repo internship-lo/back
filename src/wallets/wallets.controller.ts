@@ -11,11 +11,17 @@ import { Client, Wallet } from 'src/store/store.provider';
 export class WalletsController {
     constructor(private readonly storeService: StoreService) {}
 
+    /*
+        Within the following methods you will be able to use all the once defined in the storeService by doing 
+        this.storeService.methodName, e.g: this.storeService.clientExists('42')
+    */
+
     @Post()
     create(@User() user: Client, @Body() dto: CreateWalletDto): Wallet {
-        // Add the wallet to the store and link it to a client
+        // Check that the wallet does not exists using the walletExists method from the store service
+        // Add the wallet to the store and link it to a client (use the create wallet within the store service)
 
-        // Check that the user exists
+        // Check that the user exists [use the clientExists method that you created before]
 
         // Check that this wallet does not already exists if it does we have to send back an error to the user with the appropriate code
         // Get more infos about how http codes works here https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#client_error_responses
@@ -30,6 +36,7 @@ export class WalletsController {
 
     @Get(':walletId')
     find(@User() user: Client, @Param('walletId') walletId: string): Wallet {
+        // Check that the wallet exists if it does not return a not found exception
         // Use the received id to select the appropriate Id from the store/db and return it instead of null
 
         return null;
@@ -37,7 +44,7 @@ export class WalletsController {
 
     @Get()
     findAll(@User() client: Client): Wallet[] {
-        // Get the list of all wallets and return it owned by the current user
+        // Get the list of all wallets and return it owned by the current user (use/implement the method findAllClientWallets for that matter)
 
         return [];
     }

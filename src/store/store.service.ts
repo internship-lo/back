@@ -1,8 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Client, STORE_TOKEN, Store } from './store.provider';
+import { Client, STORE_TOKEN, Store, Wallet } from './store.provider';
 import { CreateClientDto } from 'src/clients/dto/create-client.dto';
 import { UpdateWalletDto } from 'src/wallets/dto/update-wallet.dto';
 import { ReplaceWalletDto } from 'src/wallets/dto/replace-wallet.dto';
+import { CreateWalletDto } from 'src/wallets/dto';
 
 @Injectable()
 export class StoreService {
@@ -10,12 +11,16 @@ export class StoreService {
 
     // Create all utility functions here
 
-
     public isWalletHownedByClient(walletId: string, clientId): boolean {
         // Get the wallet from the store and check that the client is really his owner
         // The list of wallets can be accessed via this.store.wallets
 
         return false;
+    }
+
+    public createWallet(ownerId: string, createWalletDto : CreateWalletDto): void {
+        // Add the provided wallet to the wallet store with the appropriate ownerId
+
     }
 
     public walletExists(walletId): boolean {
@@ -25,17 +30,17 @@ export class StoreService {
         return false;
     }
 
-    public removeWallet(walletId: string) {
+    public removeWallet(walletId: string): void {
         // Should remove a wallet from our storage
     }
 
-    public updateWallet(walletId: string, walletDto: UpdateWalletDto) {
+    public updateWallet(walletId: string, walletDto: UpdateWalletDto): Wallet {
         // Should update a wallet and return the updated version instead of null
 
         return null;
     }
 
-    public replaceWallet(walletId: string, patchDto: ReplaceWalletDto) {
+    public replaceWallet(walletId: string, patchDto: ReplaceWalletDto): Wallet {
         // Should replace the wallet properties and return the new wallet instead of null
 
         return null;
@@ -46,7 +51,12 @@ export class StoreService {
         return false;
     }
 
-    public removeClient(clientId: string) {
+    public clientExistsByUsername(username: string): boolean {
+        // Write a function that returns true of false if reather or not a client own this username
+        return false;
+    }
+
+    public removeClient(clientId: string): void {
         // Should remove the client from our storage
     }
 
@@ -54,5 +64,10 @@ export class StoreService {
         // Should add a client in our storage and return it instead of null
 
         return null;
+    }
+
+    public findAllClientWallets(clientId: string): Wallet[] {
+        // Should return all the wallets of a given client instead of an empty array
+        return [];
     }
 }
