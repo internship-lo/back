@@ -5,14 +5,14 @@ import { UpdateWalletDto } from './dto/update-wallet.dto';
 import { ReplaceWalletDto } from './dto/replace-wallet.dto';
 import { StoreService } from 'src/store/store.service';
 import { User } from 'src/authent/user.decorator';
-import { Client } from 'src/store/store.provider';
+import { Client, Wallet } from 'src/store/store.provider';
 
 @Controller('wallets')
 export class WalletsController {
     constructor(private readonly storeService: StoreService) {}
 
     @Post()
-    create(@User() user: Client, @Body() dto: CreateWalletDto) {
+    create(@User() user: Client, @Body() dto: CreateWalletDto): Wallet {
         // Add the wallet to the store and link it to a client
 
         // Check that the user exists
@@ -22,38 +22,41 @@ export class WalletsController {
         // And here how to implement it within nestjs https://docs.nestjs.com/exception-filters#built-in-http-exceptions
 
         // Check that the user is not already linked to this wallet id
+        // Return the new wallet instead of null
+
+        return null;
     }
 
 
     @Get(':walletId')
-    find(@User() user: Client, @Param('walletId') walletId: string) {
+    find(@User() user: Client, @Param('walletId') walletId: string): Wallet {
         // Use the received id to select the appropriate Id from the store/db and return it instead of null
 
         return null;
     }
 
     @Get()
-    findAll() {
+    findAll(@User() client: Client): Wallet[] {
         // Get the list of all wallets and return it owned by the current user
 
         return [];
     }
 
     @Put(':walletId')
-    replace(@User() user: Client, @Param('walletId') walletId: string, replaceWalletDto: ReplaceWalletDto) {
+    replace(@User() user: Client, @Param('walletId') walletId: string, replaceWalletDto: ReplaceWalletDto): Wallet  {
         // use this method to replace the entire content of a wallet 
 
         // Check that the wallet exists
 
         // Check that the client is the owner of this wallet
 
-        // This method has to return the replaced wallet
+        // This method has to return the replaced wallet instead of null
 
         return null;
     }
 
     @Patch(':walletId')
-    update(@User() user: Client, @Param('walletId') walletId: string, updateWalletDto: UpdateWalletDto) {
+    update(@User() user: Client, @Param('walletId') walletId: string, updateWalletDto: UpdateWalletDto): Wallet {
         // Still based on the provided walletId the user should be able to replace some infos from a specifique wallet
 
         // Check that the wallet exists
@@ -62,14 +65,18 @@ export class WalletsController {
 
         // Make the change and return the entire wallet
 
+        //Return the updated wallet instead of null
+
         return null;
     }
 
     @Delete(':walletId')
-    delete(@User() user: Client, @Param('walletId') walletId: string) {
+    delete(@User() user: Client, @Param('walletId') walletId: string): void {
         // Check that the wallet exists
         // Check that the client is the owner of this wallet 
         // Remove the wallet from our sorage
+
+        //Return nothing
         return;
     }
 }
