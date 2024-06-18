@@ -1,3 +1,5 @@
+import { Currencies } from "src/wallets/curencies.enum";
+
 export const STORE_TOKEN = 'STORE_TOKEN';
 
 export interface Client {
@@ -11,7 +13,7 @@ export interface Client {
 export interface Wallet {
     id: string;
     balance: number;
-    currentcy: number;
+    currency: Currencies;
     ownerId: string;
 }
 
@@ -21,8 +23,23 @@ export interface Store {
 }
 
 export const store: Store = {
-    clients: [],
-    wallets: []
+    clients: [
+        {
+            id: '42',
+            username: 'mister-lo',
+            age: 228,
+            birthDate: '1796',
+            location: 'Bellevue'
+        }
+    ],
+    wallets: [
+        {
+            id: 'wallet-1',
+            ownerId: '42',
+            balance: 1e9, // One billion
+            currency: Currencies.CHF
+        },
+    ]
 };
 
 export const storeProvider = {
