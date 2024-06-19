@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, NotFoundException, Param, Patch, Post, Put } from '@nestjs/common';
 
 import { CreateWalletDto } from './dto';
 import { UpdateWalletDto } from './dto/update-wallet.dto';
@@ -17,7 +17,7 @@ export class WalletsController {
     */
 
     @Post()
-    create(@User() user: Client, @Body() dto: CreateWalletDto): Wallet {
+    create(@User() user: Client, @Body() dto: CreateWalletDto) {
         // Check that the wallet does not exists using the walletExists method from the store service
         // Add the wallet to the store and link it to a client (use the create wallet within the store service)
 
@@ -29,28 +29,33 @@ export class WalletsController {
 
         // Check that the user is not already linked to this wallet id
         // Return the new wallet instead of null
-
-        return null;
+        const wallet = this.storeService.createWallet(user.id, dto);
+        return wallet;
     }
 
 
     @Get(':walletId')
-    find(@User() user: Client, @Param('walletId') walletId: string): Wallet {
+    find(@User() user: Client, @Param('walletId') walletId: string) {
         // Check that the wallet exists if it does not return a not found exception
         // Use the received id to select the appropriate Id from the store/db and return it instead of null
 
-        return null;
+        const wallet = this.storeService.findWallet(walletId);
+        if (wallet === null) {
+            throw new NotFoundException(`This wallet id does not exists ${walletId}`);
+        }
+
+        return wallet;
     }
 
     @Get()
-    findAll(@User() client: Client): Wallet[] {
+    findAll(@User() client: Client) {
         // Get the list of all wallets and return it owned by the current user (use/implement the method findAllClientWallets for that matter)
 
         return [];
     }
 
     @Put(':walletId')
-    replace(@User() user: Client, @Param('walletId') walletId: string, replaceWalletDto: ReplaceWalletDto): Wallet  {
+    replace(@User() user: Client, @Param('walletId') walletId: string, replaceWalletDto: ReplaceWalletDto)  {
         // use this method to replace the entire content of a wallet 
 
         // Check that the wallet exists
@@ -63,7 +68,7 @@ export class WalletsController {
     }
 
     @Patch(':walletId')
-    update(@User() user: Client, @Param('walletId') walletId: string, updateWalletDto: UpdateWalletDto): Wallet {
+    update(@User() user: Client, @Param('walletId') walletId: string, updateWalletDto: UpdateWalletDto) {
         // Still based on the provided walletId the user should be able to replace some infos from a specifique wallet
 
         // Check that the wallet exists
@@ -78,7 +83,7 @@ export class WalletsController {
     }
 
     @Delete(':walletId')
-    delete(@User() user: Client, @Param('walletId') walletId: string): void {
+    delete(@User() user: Client, @Param('walletId') walletId: string) {
         // Check that the wallet exists
         // Check that the client is the owner of this wallet 
         // Remove the wallet from our sorage

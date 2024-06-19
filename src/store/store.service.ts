@@ -18,9 +18,21 @@ export class StoreService {
         return false;
     }
 
-    public createWallet(ownerId: string, createWalletDto : CreateWalletDto): void {
+    public createWallet(ownerId: string, createWalletDto : CreateWalletDto) {
         // Add the provided wallet to the wallet store with the appropriate ownerId
+        this.store.wallets.push(createWalletDto)
+        return createWalletDto;
+    }
 
+    public findWallet(walletId: string) {
+        for (let i = 0; i < this.store.wallets.length; i++) {
+            const wallet = this.store.wallets[i];
+            if (wallet.id === walletId) {
+                return wallet;
+            }
+        }
+
+        return null;
     }
 
     public walletExists(walletId): boolean {

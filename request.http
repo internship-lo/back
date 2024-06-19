@@ -1,0 +1,14 @@
+#GET http://localhost:3000/wallets
+
+
+
+
+POST http://localhost:3000/wallets
+content-type: application/json
+
+{
+    "id": "jean",
+    "balance": 88,
+    "currency": "CHF",
+    "ownerId": 42
+}

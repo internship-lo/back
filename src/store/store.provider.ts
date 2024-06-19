@@ -13,6 +13,7 @@ export interface Client {
 export interface Wallet {
     id: string;
     balance: number;
+    name: string;
     currency: Currencies;
     ownerId: string;
 }
@@ -37,7 +38,8 @@ export const store: Store = {
             id: 'wallet-1',
             ownerId: '42',
             balance: 1e9, // One billion
-            currency: Currencies.CHF
+            currency: Currencies.CHF,
+            name: 'jean'
         },
     ]
 };

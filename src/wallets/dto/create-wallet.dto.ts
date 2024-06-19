@@ -7,7 +7,7 @@ export class CreateWalletDto {
 
     balance: number = 0;
 
-    defaultCurrency: Currencies = Currencies.CHF
+    currency: Currencies = Currencies.CHF
 
     ownerId: string;
 }
